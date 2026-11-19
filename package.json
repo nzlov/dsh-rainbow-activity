@@ -27,6 +27,7 @@
     "icon.svg",
     "README.md",
     "README.zh-CN.md",
+    "docs/settings-preview.png",
     "LICENSE"
   ],
   "scripts": {
