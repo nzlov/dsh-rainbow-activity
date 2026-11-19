@@ -1,0 +1,59 @@
+{
+  "name": "dsh-rainbow-activity",
+  "version": "1.5.4",
+  "type": "module",
+  "description": "Compact execution-order colour strips and step/category counts on native DSH summaries, preserving original messages and folding.",
+  "author": "nzlov",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nzlov/dsh-rainbow-activity.git"
+  },
+  "engines": {
+    "dsh": ">=0.2.2-rc.4 <0.3.0"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "settings.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.js",
+    "check": "node --check index.js && node --check settings.js && node --check header-colors.js && node --check client-main.js && node --check client.js",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "~3.19.0",
+    "@deepseek-ai/dsh-tools": "0.2.2-rc.4"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-chat",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  }
+}

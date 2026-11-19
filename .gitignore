@@ -1,0 +1,19 @@
+# Local dependencies and package archives
+node_modules/
+*.tgz
+/.artifacts/
+
+# Build and test scratch output (client.js is the runtime entry and is tracked)
+/dist/
+/coverage/
+*.log
+
+# Local environment and editor files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
