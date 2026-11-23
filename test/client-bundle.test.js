@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import vm from 'node:vm';
 import test from 'node:test';
+import { evaluatePluginCompatibility } from '@deepseek-ai/dsh-app-boot';
 
 // Real shared React from this installation. Module initialization is not a DOM
 // mount or visual/disclosure verification.
@@ -81,4 +82,26 @@ test('settings preview stays compact without borrowing the Chat button layout', 
   assert.match(preview, /core\.gradientFor\(sequence, colors\)/);
   assert.match(preview, /core\.legendItems\(sequence, t\)/);
   assert.match(main, /'aria-live': 'polite'/);
+});
+
+test('DSH compatibility range and DSH peer dependencies stay aligned across 0.2.x', async () => {
+  const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+  assert.equal(manifest.engines.dsh, '>=0.2.2-rc.4 <0.3.0-0');
+  assert.equal(manifest.exports['./package.json'], './package.json');
+  assert.equal(manifest.peerDependencies['@deepseek-ai/schemastery'], '^3.19.0');
+  const dshPeers = Object.entries(manifest.peerDependencies)
+    .filter(([pkg]) => pkg === '@deepseek-ai/dsh' || pkg.startsWith('@deepseek-ai/dsh-'));
+  assert.ok(dshPeers.length > 0);
+  for (const [pkg, range] of dshPeers) {
+    assert.equal(range, manifest.engines.dsh, `${pkg} peer range must match engines.dsh`);
+  }
+  const peerOnlyManifest = { ...manifest, engines: {} };
+  for (const version of ['0.2.2-rc.4', '0.2.2-rc.5', '0.2.2', '0.2.3-rc.1', '0.2.3']) {
+    assert.equal(evaluatePluginCompatibility(manifest, {}, version), undefined, `engines.dsh should accept ${version}`);
+    assert.equal(evaluatePluginCompatibility(peerOnlyManifest, {}, version), undefined, `dsh peers should accept ${version}`);
+  }
+  for (const version of ['0.2.2-rc.3', '0.3.0-alpha.1', '0.3.0']) {
+    assert.ok(evaluatePluginCompatibility(manifest, {}, version), `engines.dsh should reject ${version}`);
+    assert.ok(evaluatePluginCompatibility(peerOnlyManifest, {}, version), `dsh peers should reject ${version}`);
+  }
 });

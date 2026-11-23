@@ -10,7 +10,7 @@ Adds step counts, an execution-order colour strip, and a category legend to DSH 
 
 ## Installation
 
-Requires DSH Web `>=0.2.2-rc.4 <0.3.0`.
+Requires DSH Web `>=0.2.2-rc.4 <0.3.0-0`.
 
 Run either command on the DSH host. Replace `web` with the name of your profile if you use a different one.
 

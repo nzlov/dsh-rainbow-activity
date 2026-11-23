@@ -143,7 +143,7 @@ test('quoted identifiers and labels cannot escape generated strings', () => {
   assert.match(css, /content:"a\\22 \\a b"/);
 });
 
-test('installed rc.4 has the matching host selectors and ordered projection contracts', async () => {
+test('installed DSH has the matching host selectors and ordered projection contracts', async () => {
   const root = new URL('../node_modules/@deepseek-ai/', import.meta.url);
   const chat = new URL('dsh-client-ui-chat/src/client/', root);
   const conv = new URL('dsh-client-ui-conversation/src/client/', root);
