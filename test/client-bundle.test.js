@@ -38,7 +38,7 @@ test('browser asset stays lazy and initializes with the installed shared React',
 test('package and both locales retain the canonical name and author', async () => {
   const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
   assert.equal(manifest.name, 'dsh-rainbow-activity');
-  assert.equal(manifest.version, '1.5.4');
+  assert.equal(manifest.version, '1.5.5');
   assert.ok(manifest.dsh.client.inject.includes('@deepseek-ai/dsh-client-ui-conversation'));
   assert.ok(manifest.dsh.client.inject.includes('@deepseek-ai/dsh-api-session-controller'));
   assert.equal(manifest.author, 'nzlov');

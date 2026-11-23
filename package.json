@@ -1,6 +1,6 @@
 {
   "name": "dsh-rainbow-activity",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "type": "module",
   "description": "Compact execution-order colour strips and step/category counts on native DSH summaries, preserving original messages and folding.",
   "author": "nzlov",
